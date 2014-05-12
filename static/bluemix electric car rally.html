@@ -1,0 +1,193 @@
+<html ng-app="app" lang="en" class="ng-scope"><!-- ======================================================================= --><head><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}</style>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+
+        <title>bluemix electric car rally</title>
+
+        <link rel="shortcut icon" href="images/bluemix-icon.png">
+        <link rel="icon" href="images/bluemix-icon.png">
+
+        <link rel="stylesheet" href="http://car-rally.ng.bluemix.net/bower/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://car-rally.ng.bluemix.net/bower/bootstrap/css/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="index.css">
+    </head>
+
+    <!-- =================================================================== -->
+
+    <body ng-controller="body" class="ng-scope">
+
+        <div class="navbar navbar-default nabar-static-top" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <span class="navbar-brand" href="#/">bluemix electric car rally<span ng-bind="getSubtitle()" class="ng-binding"></span>
+            </span></div>
+
+            <div class="navbar-collapse collapse" style="height: 0px;">
+                <ul class="nav navbar-nav navbar-right pull-right">
+                    <li><a href="#/">home</a>
+                    </li><li><a href="#/mail">mail</a>
+                    </li><li><a href="#/help">help</a>
+                </li></ul>
+            </div>
+
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <!-- ngView:  --><div ng-view="" class="ng-scope"><!-- Licensed under the Apache License. See footer for details. -->
+
+<h2 class="ng-scope">Electric charge locations near you</h2>
+
+<div class="container-fluid ng-scope">
+	<div class="row">
+
+		<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+			<h3></h3>
+
+			<img ng-show="mapURL" ng-src="http://maps.googleapis.com/maps/api/staticmap?sensor=false&amp;size=500x400&amp;visual_refresh=true&amp;markers=color:red%7Clabel:1%7C30.191115923061915,-97.77210831642151&amp;markers=color:red%7Clabel:2%7C30.268109,-97.749269&amp;markers=color:red%7Clabel:3%7C29.827707,-97.979685&amp;markers=color:red%7Clabel:4%7C29.5588,-98.483677&amp;markers=color:red%7Clabel:5%7C29.5588,-98.483677&amp;markers=color:red%7Clabel:6%7C29.470615,-98.46432199999998&amp;markers=color:red%7Clabel:7%7C29.54316,-98.5752&amp;markers=color:red%7Clabel:8%7C29.54316,-98.5752&amp;markers=color:red%7Clabel:9%7C29.457057,-98.624749" width="100%" class="" src="http://maps.googleapis.com/maps/api/staticmap?sensor=false&amp;size=500x400&amp;visual_refresh=true&amp;markers=color:red%7Clabel:1%7C30.191115923061915,-97.77210831642151&amp;markers=color:red%7Clabel:2%7C30.268109,-97.749269&amp;markers=color:red%7Clabel:3%7C29.827707,-97.979685&amp;markers=color:red%7Clabel:4%7C29.5588,-98.483677&amp;markers=color:red%7Clabel:5%7C29.5588,-98.483677&amp;markers=color:red%7Clabel:6%7C29.470615,-98.46432199999998&amp;markers=color:red%7Clabel:7%7C29.54316,-98.5752&amp;markers=color:red%7Clabel:8%7C29.54316,-98.5752&amp;markers=color:red%7Clabel:9%7C29.457057,-98.624749">
+		</div>
+      
+      
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+          
+          
+			<h3>Stations</h3>
+
+			<!-- ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">1: <a href="" class="ng-binding">South Point Nissan</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					4914-S. IH-35
+					<br>
+					Austin, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">2: <a href="" class="ng-binding">Mellow Johnny's Bike Shop</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					400 Nueces St.
+					<br>
+					Austin, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">3: <a href="http://www.teslamotors.com" class="ng-binding">Tesla Motors (Worldwide)</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					3939 Interstate 35
+					<br>
+					San Marcos, Texas
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">4: <a href="" class="ng-binding">Nissan US Dealer Network</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					12838 San Pedro Avenue
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">5: <a href="" class="ng-binding">Nissan US Dealer Network</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					12838 San Pedro Avenue
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">6: <a href="" class="ng-binding">Central Market (Alamo Heights)</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					4821 Broadway Street
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">7: <a href="" class="ng-binding">Nissan US Dealer Network</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					10835 IH 10 West
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">8: <a href="" class="ng-binding">Nissan US Dealer Network</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					10835 IH 10 West
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations --><div ng-show="stations" ng-repeat="station in stations" class="ng-scope">
+				<b class="ng-binding">9: <a href="" class="ng-binding">Nissan US Dealer Network</a></b>
+				<div style="margin-left:2em;" class="ng-binding">
+					6990 Northwest Loop 410
+					<br>
+					San Antonio, TX
+			    </div>
+			</div><!-- end ngRepeat: station in stations -->
+		</div>
+
+
+      
+	</div>
+</div>
+
+<!--
+#===============================================================================
+# Copyright IBM Corp. 2014
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#===============================================================================
+--></div>
+                </div>
+            </div>
+
+            <hr>
+            
+        </div>
+
+
+        <script src="http://car-rally.ng.bluemix.net/bower/jquery/jquery.min.js"></script>
+        <script src="http://car-rally.ng.bluemix.net/bower/bootstrap/js/bootstrap.min.js"></script>
+        <script src="http://car-rally.ng.bluemix.net/bower/angular/angular.min.js"></script>
+        <script src="http://car-rally.ng.bluemix.net/bower/angular-resource/angular-resource.min.js"></script>
+        <script src="http://car-rally.ng.bluemix.net/bower/angular-route/angular-route.min.js"></script>
+        <script src="node-modules.js"></script>
+        <script src="index.js"></script>
+        <!--
+        <script src="//maps.googleapis.com/maps/api/js?key=%gmapKey%&amp;sensor=false"></script>
+        -->
+
+    
+
+
+<!--
+#===============================================================================
+# Copyright IBM Corp. 2014
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#===============================================================================
+-->
+</body></html>

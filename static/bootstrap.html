@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bluemix Job Candidate Search</title>
+    <script>
+        window.fbAsyncInit = function() {
+          /*
+          FB.init({
+            appId      : '129661397088987',
+            status     : true
+          });
+      */
+
+      FB.Event.subscribe('auth.authResponseChange', function(response) {
+          if (response.status === 'connected') {
+            console.log('Logged in');
+          FB.api({
+              method: 'fql.query',
+              query: 'select uid, name, education.concentration.name from user where uid in (select uid2 from friend where uid1=me())',
+            access_token: response.authResponse.accessToken           
+          }, function(response){
+              console.log(response);
+              document.querySelectorAll('#idPreblock')[0].insertAdjacentHTML('afterEnd','<textarea class="col-lg-12" rows="10" cols="80">' 
+                + JSON.stringify(response, undefined, 2) + '</textarea>')
+          });         
+          } else {
+            FB.login();
+            console.log(response)
+          }
+        });  
+        };
+    </script>   
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+  </head>
+  <body>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=129661397088987";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          
+          <li><div id="fb-root"><div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true" scope="friends_education_history,friends_location"></div></div></li>
+          
+        </ul>
+        <h3 class="text-muted">Bluemix Job Candidate Search</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Help me give your friend a job at IBM</h1>
+        <p class="lead"><br/>Wait for a Facebook button in the upper right to show up and login with your Facebook account</p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-12">
+          <div id="idPreblock"></div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>&copy; IBM 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+</html>

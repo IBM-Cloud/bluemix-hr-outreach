@@ -1,0 +1,132 @@
+<html>
+<head>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="navbar-fixed-top.css" >
+	<title>LinkedIn Outreach</title>
+  <style type="text/css">
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+      background-color: #428bca;
+      color: #fff;
+      border: 0px solid #ddd;   
+    }
+    .nav-tabs>li>a {
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-bottom-color: transparent;   
+      color: #ddd;
+      font-weight: 900;
+    }
+  </style>  
+</head>
+<body style="padding-top: 0px; min-height: 0px">
+
+   <!-- Fixed navbar -->
+<!--     <div class="navbar navbar-default navbar-fixed-top" role="navigation"></div>
+ -->
+      <div class="container">
+        <img class="xr_ap" src="index_htm_files/77.png" alt="" title="" style="left: 0px; top: 0px; width: 100%; height: 19px;">      
+        <div class="navbar-header" style="margin-top: 10px">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+            <span style="font-family:Arial;font-size:40px;font-weight:normal;font-style:normal;text-decoration:none;color:#4885CE;letter-spacing:0.0em;">LinkedIn</span> <span style="font-family:Arial;font-size:40px;font-weight:normal;font-style:normal;text-decoration:none;color:#ED7621;letter-spacing:0.0em;">HR Outreach</span>
+          </a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+         </ul>
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+
+        <!-- Nav tabs -->
+        <ul style="margin-top: 25px" class="nav nav-tabs">
+          <li class="active"><a href="#home" data-toggle="tab">Recent Responses</a></li>
+          <li><a href="#profile" data-toggle="tab">Contacted</a></li>
+          <li><a href="#messages" data-toggle="tab">Holding for response</a></li>
+          <li><a href="#settings" data-toggle="tab">Accepted</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div class="tab-pane active" id="home">
+<!--  
+            <span class="col-md-12"><hr></span>
+
+            <div class="col-md-12" style="margin: 10 0 10 0">
+  
+                <div class="col-md-2" style="text-align: center"><img src="http://m.c.lnkd.licdn.com/mpr/mprx/0_iaXmsDCH4ibsSFqCXxF80uCoOlU9SnNCXjsiy22krLVzdB62QO5COQALHXs" width="80%"></div>
+                
+                
+                <div class="col-md-5">  <strong>David Barnes</strong><br>Program Director, Emerging Internet Technologies <br> IBM <br>
+                Austin, Texas  |  Information Technology and Services <br>
+                <a href="http://www.linkedin.com/pub/dan-developer/91/6a7/536">LinkedIn Profile</a>
+              </div>
+                <div class="col-md-5"> 
+                <strong>Experience</strong><br>I've spent my career working on new and emerging technologies, identifying the business and social values of the technologies, and presenting and demonstrating them in ways that both technical and non-technical people can understand. 
+                <br>
+                <strong>Skills</strong><br>
+                  Technology Evangelist, Technology Strategy, Public Speaking
+                
+                </div>
+      
+            </div>
+-->
+
+
+          </div>
+          <div class="tab-pane" id="profile">Profile</div>
+          <div class="tab-pane" id="messages">Messages</div>
+          <div class="tab-pane" id="settings">Settings</div>
+        </div>
+
+
+      </div>
+
+<script>
+function hide(id, rev, arr) {
+  console.log('_id ' + id + ' _rev ' + rev);
+  var req = new XMLHttpRequest();
+  req.open('DELETE', '/profile/'+id+'/'+rev, true);
+  req.onload = function() {
+    if (this.status >= 200 && this.status < 400) {
+      arr.forEach(function(el){ el.style.display='none';});    
+    } else {
+      //handle this in onerror
+    }
+  }
+  req.onerror = function() {
+      console.log(req.responseText);
+  };
+  req.send();
+}
+
+var json = {};
+var req = new XMLHttpRequest();
+req.open('GET', '<%= CLOUDANT_URL %>/<%= CLOUDANT_DATABASE %>/_design/profiles/_list/bluemix/profile', true);
+req.onload = function() {
+  if (this.status >= 200 && this.status < 400) {
+  // Success!
+   //json = this.response;
+    json = JSON.parse(this.response);
+    document.getElementById('home').innerHTML = json.map(function(el) {
+      return '<span class="col-md-12" style="text-align: right"><hr><a style="cursor: pointer" onclick="javascript:hide(\'' + el._id + '\',\'' +  el._rev + '\', [this.parentNode, this.parentNode.nextSibling])">x</a></span><div class="col-md-12" style="margin: 10 0 10 0"><div class="col-md-2" style="text-align: center"><img src="' + el.pictureUrl + '" width="80%"></div><div class="col-md-5"><strong>' + el.firstName + ' ' + el.lastName + '</strong><br>' + el.headline +'<br/>' + el.location + '  <br/><a href="'+ el.publicProfileUrl + '">LinkedIn Profile</a></div><div class="col-md-5"><strong>Experience</strong><br>'+ el.summary + '<br><strong>Skills</strong><br>' + el.skills.join(',') + '</div></div>';
+    }).join('');
+  } else {
+    //handle this in onerror
+  }
+};
+req.onerror = function() {
+    console.log(req.responseText);
+};
+req.send();
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>    

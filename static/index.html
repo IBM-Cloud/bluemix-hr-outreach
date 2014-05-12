@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Bluemix Job Candidate Search</title>
+    <script type="text/javascript" src="https://platform.linkedin.com/in.js">
+      api_key: REPLACEME
+      authorize: true
+      onLoad: onLinkedInLoad
+    </script>
+    <script type="text/javascript">
+      function onLinkedInLoad() {
+        function getPictureUrl(req) {
+          if (req.values != undefined 
+              && req.values.length > 0 
+              && req.values[0].pictureUrls != undefined
+              && req.values[0].pictureUrls.values != undefined
+              && req.values[0].pictureUrls.values.length > 0
+              && req.values[0].pictureUrls.values[0] != undefined)
+          return req.values[0].pictureUrls.values[0];
+         else 
+          return undefined;        
+        }
+
+        IN.Event.on(IN, 'logout', function() {
+          document.querySelectorAll('#idLogout')[0].style.display = 'none';
+        });
+        IN.Event.on(IN, 'auth', function() {
+          document.querySelectorAll('#idLogout')[0].style.display = '';
+        });
+
+        IN.Event.onOnce(IN, 'auth', function() {
+        var linkedInProfileJSON = {};
+        var pu = undefined;
+        IN.API.Profile("me").fields(["id", "firstName", "lastName", "email-address", "headline", "location:(name)", "summary", "skills", "educations", "public-profile-url", "picture-url", "picture-urls::(original)"]).result(function(result){ 
+          //console.log(JSON.stringify(result, undefined, 2));
+          linkedInProfileJSON[0] = result;
+
+            IN.API.Connections("me").fields(["id","firstName", "lastName", "industry"]).result(function(anotheresult){
+              //console.log(JSON.stringify(anotheresult, undefined, 2))
+              linkedInProfileJSON[1] = anotheresult;
+
+/* DEBUG ONLY
+              document.querySelectorAll('#idLinkedInPreblock')[0].innerHTML='<textarea class="col-lg-12" rows="10" cols="80">' 
+                + JSON.stringify(linkedInProfileJSON, undefined, 2) + '</textarea>';
+//*/
+
+              var req = new XMLHttpRequest()
+              req.open('POST', '/cloudant', true)
+              req.setRequestHeader('Content-Type', 'application/json');
+              req.send(JSON.stringify(linkedInProfileJSON, undefined, 2));
+              })        
+
+              pu = getPictureUrl(result);
+              du = parseURL(document.URL);
+              var liMsg = {
+                "comment": "",
+                "content": {
+                  "title": "Help me give your friend a job at IBM",
+                  "description": "Visit my page for more details about the job opportunity.",
+                  "submitted-url": du.host,
+                },
+                "visibility": {
+                  "code": "anyone"
+                }
+              }
+              if (pu != undefined) {
+                //liMsg.content['submitted-image-url'] = pu;
+                var purl = parseURL(pu);
+                var puCode = purl.segments[purl.segments.length - 1];
+                liMsg.content['submitted-url'] = liMsg.content['submitted-url'] + '#' + puCode;
+              }
+
+///* LINKEDIN SHARE
+              IN.API.Raw('/people/~/shares').method('POST').body(JSON.stringify(liMsg)).result(function(result) {
+                console.log(JSON.stringify(result, undefined, 2))
+                document.getElementById('idTagline').innerHTML ='<h1>Thank you <?js= firstName ?></h1>';
+                document.getElementById('idHint').innerHTML = '<br/>We shared this message with your friends on your behalf. You can always delete this message <a href="' + result.updateUrl + '">here</a>';
+              });
+//*/            
+  
+          });  
+        });
+      }
+    </script>
+
+    <script>
+        function parseURL(url) {
+            var a =  document.createElement('a');
+            a.href = url;
+            return {
+                source: url,
+                protocol: a.protocol.replace(':',''),
+                host: a.hostname,
+                port: a.port,
+                query: a.search,
+                params: (function(){
+                    var ret = {},
+                        seg = a.search.replace(/^\?/,'').split('&'),
+                        len = seg.length, i = 0, s;
+                    for (;i<len;i++) {
+                        if (!seg[i]) { continue; }
+                        s = seg[i].split('=');
+                        ret[s[0]] = s[1];
+                    }
+                    return ret;
+                })(),
+                file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+                hash: a.hash.replace('#',''),
+                path: a.pathname.replace(/^([^\/])/,'/$1'),
+                relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+                segments: a.pathname.replace(/^\//,'').split('/')
+            };
+        }    
+
+
+    </script>   
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+  </head>
+  <body>
+  <script>/*(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=129661397088987";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));*/
+    function logout() {
+      IN.User.logout(function(){});
+    }
+  </script>
+
+    <div class="container">
+      <div class="header">
+        <ul class="nav nav-pills pull-right">
+          
+          <li>
+            <script type="in/Login">Hello, <?js= firstName ?>!</script>
+            <span id='idLogout' style='display: none;'>&nbsp;<a href="#" onclick="javascript:logout()">Logout</a></span>
+          </li>
+          <li><!--div id="fb-root"><div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" scope="friends_education_history,friends_location,user_photos"></div></div>--></li>
+          
+        </ul>
+        <h3 class="text-muted">BlueMix Job Candidate Search</h3>
+      </div>
+
+      <div class="jumbotron">
+        <div id="fbPhoto" style="display: none;"><img id="fbPhotoImg" style="width=180px; height=264px"/></div>
+        <div id="liPhoto" style="display: none;"><img id="liPhotoImg" style="width=180px; height=264px"/></div>
+
+        <div id="idTagline"><h1>Help me give your friend <a href="https://jobs3.netmedia1.com/cp/faces/job_summary?job_id=SWG-0605420">a job</a> at <a href="http://www.ibm.com/ibm/us/en/?lnk=fai-maib-usen">IBM</a></h1></div>
+        <p id="idHint" class="lead"><br/>Wait for the LinkedIn button on the upper right to show up and login with your LinkedIn account</p>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-12">
+          <div id="idPreblock"></div>
+        </div>
+      </div>
+
+      <div class="row marketing">
+        <div class="col-lg-12">
+          <div id="idLinkedInPreblock"></div>
+        </div>
+      </div>      
+
+      <div class="footer">
+        <p>&copy; IBM 2014</p>
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+  <script>
+    var puCode = parseURL(document.URL).hash
+    if (puCode != "") {
+      document.getElementById('liPhotoImg').src = "http://m.c.lnkd.licdn.com/mpr/mprx/" + puCode;
+      document.querySelectorAll('#liPhoto')[0].style.display = '';
+    }
+  </script>
+</html>

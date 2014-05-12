@@ -1,0 +1,5 @@
+node_modules
+tmp
+lib-src
+www-src
+*.coffee

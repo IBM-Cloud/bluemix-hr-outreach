@@ -1,0 +1,11 @@
+{
+	  "_id": "_design/profiles",
+	  "language": "javascript",
+	  "views": {
+		    "csv": {
+		      "map": "function(doc) { emit(null, { 'id': doc[0].values[0].id, 
+		      	'lastName': doc[0].values[0].lastName, 
+		      	'firstName': doc[0].values[0].firstName }); }"
+			}
+	  }
+}

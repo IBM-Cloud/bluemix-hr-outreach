@@ -1,0 +1,67 @@
+<% var TITLE='Dashboard' %>
+<% include header %>
+<script>
+ function parseURL(url) {
+      var a =  document.createElement('a');
+      a.href = url;
+      return {
+          source: url,
+          protocol: a.protocol.replace(':',''),
+          host: a.hostname,
+          port: a.port,
+          query: a.search,
+          params: (function(){
+              var ret = {},
+                  seg = a.search.replace(/^\?/,'').split('&'),
+                  len = seg.length, i = 0, s;
+              for (;i<len;i++) {
+                  if (!seg[i]) { continue; }
+                  s = seg[i].split('=');
+                  ret[s[0]] = s[1];
+              }
+              return ret;
+          })(),
+          file: (a.pathname.match(/\/([^\/?#]+)$/i) || [,''])[1],
+          hash: a.hash.replace('#',''),
+          path: a.pathname.replace(/^([^\/])/,'/$1'),
+          relative: (a.href.match(/tps?:\/\/[^\/]+(.+)/) || [,''])[1],
+          segments: a.pathname.replace(/^\//,'').split('/')
+      };
+  }
+  var hash = parseURL(document.URL).hash
+  if (hash == "") hash = 'b';
+  var visitors = 'visitors.' + hash + '.html', clicks = 'clicks.' + hash + '.html', degrees = 'degrees.' + hash + '.html';
+
+</script>
+<div class="container">
+  <div>
+   <p style="height: 50px"></p>
+   <p><h2>Total Visits:</h2></p>
+    <div><iframe style="border-width: 0px" width="100%" height="530px" src="brush.d3.html"/></iframe></div>    
+
+    <div>
+      <div class="col-md-6">
+         <p><h2>Visitor Actions:</h2></p>
+         <div><iframe style="border-width: 0px" width="100%" height="530px" src="clicks.before.d3.html"/></iframe></div>          
+      </div>
+      <div class="col-md-6">
+         <p><h2>Visitor Degrees:</h2></p>
+         <div><iframe style="border-width: 0px" width="100%" height="530px" src="degree.before.d3.html"/></iframe></div>    
+      </div>      
+    </div>
+<div>
+    <div class="col-md-6">
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+    </div>
+
+    <div class="col-md-6">
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+          <div style="font-size: 10px"><p>Did not sign in - the visitor opened the page but did not click on the LinkedIn sign in button</p>   </div>    
+    </div>
+</div>
+  </div>
+</div> <!-- /container -->
+<% include footer %>

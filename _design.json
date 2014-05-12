@@ -1,0 +1,19 @@
+{
+  "_id": "_design/profiles",
+  "language": "javascript",
+  "views": {
+    "profile": {
+      "map": "function(doc) {var skills = []; if (doc[0].values[0].skills != undefined) { skills = doc[0].values[0].skills.values.map(function(e) {return e.skill.name}) }; var pictureUrl = 'no_profile_picture'; if (doc[0].values[0].pictureUrls.values.length > 0) {pictureUrl = doc[0].values[0].pictureUrls.values[0];} else if (doc[0].values[0].pictureUrl != undefined) {pictureUrl = doc[0].values[0].pictureUrl;} else pictureUrl = 'no_profile_picture.png'; emit(null, {'_id': doc._id, '_rev': doc._rev, 'id': doc[0].values[0].id, 'lastName': doc[0].values[0].lastName, 'firstName': doc[0].values[0].firstName, 'summary': doc[0].values[0].summary, 'headline': doc[0].values[0].headline, 'location': doc[0].values[0].location.name, 'publicProfileUrl': doc[0].values[0].publicProfileUrl, 'pictureUrl': pictureUrl, 'email': doc[0].values[0].emailAddress, 'skills': skills, 'degree': doc[0].values[0].educations.values[0].fieldOfStudy }); }"
+    },
+    "csv": {
+      "map": "function(doc) { emit(null, { 'id': doc[0].values[0].id, 'lastName': doc[0].values[0].lastName, 'firstName': doc[0].values[0].firstName }); }"
+    }
+  },
+  "lists": {
+    "csv": "function(head, req) {while(row = getRow()) {var arr = []; for (i in row.value) arr.push(row.value[i]); send(arr.join(','); send('\\n'));}}",
+    "bluemix": "function(head, req) {start({headers: {'Access-Control-Allow-Origin': '*'}}); var row = getRow(); var row_next; send('['); if (row != null) { do { send(JSON.stringify(row.value)); row_next = getRow(); if (row_next != null) { send(','); } } while (row=row_next);} send(']');}"
+  },
+  "shows": {
+    "bluemix": "function(doc, req) {return {body: '<h1>' + doc + '</h1>', headers : {'Access-Control-Allow-Origin': 'http://node-linkedin-js-v9.ng.bluemix.net', 'Access-Control-Allow-Origin': 'http://linkedin-outreach.ng.bluemix.net', 'Access-Control-Allow-Origin': '*'} }}"
+  }
+}

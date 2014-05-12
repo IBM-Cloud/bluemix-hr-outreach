@@ -1,0 +1,123 @@
+<% var TITLE='Administrative Console' %>
+<% include header %>
+  <!-- Latest compiled and minified JavaScript -->
+  <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="180jqwdosd3nmc1"></script>
+
+<div class="container">
+
+  <!-- Main component for a primary marketing message or call to action -->
+  <div>
+<!--   
+    <h1>Navbar example</h1>
+    <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+
+ -->
+    <p style="height: 50px"></p>
+
+    <div>
+
+      <div class='col-md-4'>  
+        <p><h2>Your IBM ID Profile:</h2></p>
+          <div><b>lastName</b> <%= lastName %></div>
+          <div><b>firstName</b> <%= firstName %></div>    
+          <div><b>email</b> <%= email %></div>
+          <div><b>userId</b> <%= userId %></div>
+      </div>
+
+      <div class='col-md-8'>
+        <p><h2>Bluemix Service:</h2></p>
+        <div><b>Host</b> <%= url %></div>
+        <div><b>Port</b> <%= port %></div>
+        <p><h2>Cloudant Service:</h2></p>
+        <div><b>databaseUrl</b> <%= CLOUDANT_URL %></div>
+        <div><b>databaseName</b> <%= CLOUDANT_DATABASE %></div>    
+        <div><b>databaseApiKey</b> <%= CLOUDANT_USERNAME %></div>
+        <div><b>databaseApiSecret</b> <%= CLOUDANT_PASSWORD %></div>
+        <p></p>
+        <div class='col-md-4' style="padding-left: 0px">
+          <p>Save latest database profile data to <br/>your Dropbox:</p>
+          <a href="<%= CLOUDANT_URL %>/<%= CLOUDANT_DATABASE %>/_design/profiles/_list/csv/profile" data-filename="profiles.csv" class="dropbox-saver dropbox-dropin-btn dropbox-dropin-default"><span class="dropin-btn-status"></span>Save to Dropbox</a>            
+        </div>
+
+        <div class='col-md-4'>
+          <p>or save to <br/>your local hard drive:</p>
+          <div><button class="btn btn-default"><a href="<%= CLOUDANT_URL %>/<%= CLOUDANT_DATABASE %>/_design/profiles/_list/csv/profile">Save</a></button></div>        
+        </div>        
+      </div>  
+    </div>
+
+</div>
+
+    <p><h2>Administrators:</h2></p>
+
+    <div>
+      <p>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>osipov@us.ibm.com</td>
+            </tr>
+            <tr>
+              <td>patrick_mueller@us.ibm.com</td>
+            </tr>
+            <tr>
+              <td>boloker@us.ibm.com</td>
+            </tr>
+            <tr>
+              <td>davidb@us.ibm.com</td>
+            </tr>  
+          </tbody>
+        </table>        
+      </p>
+    </div>
+
+ 
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addAdmin">
+    Add Administrator
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Add an administrator to the service</h4>
+        </div>
+        <div class="modal-body">
+
+          <form role="form">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            </div>
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+
+
+<!--     <p>To see the difference between static and fixed top navbars, just scroll.</p>
+    <p>
+      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+    </p>
+ -->
+  </div>
+
+</div> <!-- /container -->
+<% include footer %>

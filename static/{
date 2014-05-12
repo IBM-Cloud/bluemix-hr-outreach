@@ -1,0 +1,21 @@
+{
+	"contentType":"linkedin-html",
+	"body":"My Fancy Update"
+}
+
+http://api.linkedin.com/v1/people/~/shares
+
+IN.API.Raw('/people/~/shares').method('POST').body(JSON.stringify(msg)).result(function(result){console.log(JSON.stringify(result, undefined, 2))})
+
+var msg = {
+	"comment": "Check out my page",
+	"content": {
+		"title": "title",
+		"description": "description",
+		"submitted-url": "http://node-linkedin-js-v8.ng.bluemix.net",
+		"submitted-image-url": "http://node-linkedin-js-v8.ng.bluemix.net"
+	},
+	"visibility": {
+		"code": "anyone"
+	}
+}
