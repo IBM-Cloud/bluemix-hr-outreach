@@ -5,7 +5,10 @@ To push the code to BlueMix and to start the application, use the following comm
 
 cf push -n linkedin-node-js-$RANDOM -c 'node main.js'
 
+setup instructions
+==================
 
+For details see 
 
 
 license
