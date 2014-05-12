@@ -8,7 +8,7 @@ cf push -n linkedin-node-js-$RANDOM -c 'node main.js'
 setup instructions
 ==================
 
-For details see 
+For details see https://github.com/CodenameBlueMix/bluemix-hr-outreach/blob/master/CHRO%20Demo%20Setup%20Guide%20V2.pdf?raw=true
 
 
 license
